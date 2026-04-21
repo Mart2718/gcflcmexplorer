@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Factors, Multiples, GCF & LCM · Math 204</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy:    #1c3d5e;
+    --navydk:  #0f2336;
+    --navymd:  #2d5986;
+    --amber:   #d97706;
+    --amberlt: #fef3c7;
+    --amberdk: #92400e;
+    --grn:     #065f46;
+    --grnlt:   #d1fae5;
+    --purp:    #5b21b6;
+    --purplt:  #ede9fe;
+    --teal:    #0e7490;
+    --teallt:  #cffafe;
+    --red:     #991b1b;
+    --redlt:   #fee2e2;
+    --cream:   #fffbf2;
+    --white:   #ffffff;
+    --gray:    #64748b;
+    --graylt:  #f1f5f9;
+    --border:  #e2e8f0;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body: 'DM Sans', system-ui, sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--cream);
+    color: var(--navy);
+    min-height: 100vh;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  /* ─── HEADER ─── */
+  .site-header {
+    background: linear-gradient(135deg, var(--navydk) 0%, var(--navymd) 100%);
+    padding: 22px 28px 18px;
+    color: white;
+  }
+  .site-header .kicker {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin-bottom: 5px;
+  }
+  .site-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  .site-header .sub {
+    font-size: 12px;
+    opacity: 0.55;
+  }
+
+  /* ─── TAB NAV ─── */
+  .tab-nav {
+    background: var(--navydk);
+    display: flex;
+    overflow-x: auto;
+    border-bottom: 3px solid var(--amber);
+    scrollbar-width: none;
+  }
+  .tab-nav::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    padding: 12px 20px;
+    background: transparent;
+    color: rgba(255,255,255,0.55);
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--font-body);
+    transition: all 0.18s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    position: relative;
+  }
+  .tab-btn.active {
+    background: var(--amber);
+    color: var(--navydk);
+    font-weight: 700;
+  }
+  .tab-btn:hover:not(.active) { color: rgba(255,255,255,0.85); }
+
+  /* ─── MAIN CONTENT ─── */
+  .main { max-width: 900px; margin: 0 auto; padding: 24px 18px 60px; }
+
+  .tab-panel { display: none; animation: fadeIn 0.2s ease; }
+  .tab-panel.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ─── CARD ─── */
+  .card {
+    background: var(--white);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: 0 2px 14px rgba(15,35,54,0.07);
+    border: 1px solid var(--border);
+    margin-bottom: 18px;
+  }
+  .card-dark { background: var(--navydk); color: white; }
+  .card-amber { background: var(--amberlt); border-color: rgba(217,119,6,0.3); }
+  .card-green { background: var(--grnlt); border-color: rgba(6,95,70,0.25); }
+  .card-purple { background: var(--purplt); border-color: rgba(91,33,182,0.2); }
+  .card-teal { background: var(--teallt); border-color: rgba(14,116,144,0.2); }
+  .card-red { background: var(--redlt); border-color: rgba(153,27,27,0.25); }
+
+  /* ─── TYPOGRAPHY ─── */
+  .h2 {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 14px;
+  }
+  .h3 {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .lbl {
+    display: block;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gray);
+    margin-bottom: 6px;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-bottom: 12px;
+  }
+  .badge-amber { background: var(--amberlt); color: var(--amberdk); }
+  .badge-purple { background: var(--purplt); color: var(--purp); }
+
+  /* ─── INPUTS ─── */
+  .num-input {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    font-size: 20px;
+    width: 78px;
+    text-align: center;
+    color: var(--navy);
+    font-weight: 700;
+    font-family: var(--font-body);
+    background: var(--white);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .num-input:focus { border-color: var(--amber); }
+  .num-input.correct { border-color: var(--grn) !important; }
+  .num-input.wrong { border-color: var(--red) !important; }
+
+  .pair-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 14px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .pair-amp { font-size: 22px; color: var(--gray); padding-bottom: 12px; }
+
+  /* ─── CHIPS ─── */
+  .chip-wrap { display: flex; flex-wrap: wrap; }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    height: 40px;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 600;
+    background: var(--graylt);
+    color: var(--gray);
+    margin: 3px;
+    border: 2px solid transparent;
+    transition: all 0.22s;
+    padding: 0 6px;
+    cursor: default;
+    white-space: nowrap;
+  }
+  .chip.hl-amber { background: var(--amber); color: white; border-color: rgba(217,119,6,0.5); }
+  .chip.hl-green { background: var(--grn); color: white; border-color: rgba(6,95,70,0.5); }
+  .chip.hl-purple { background: var(--purp); color: white; border-color: rgba(91,33,182,0.5); }
+  .chip.hl-bold { transform: scale(1.1); font-weight: 800; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    transition: all 0.18s;
+    letter-spacing: 0.01em;
+  }
+  .btn:hover { filter: brightness(1.08); transform: translateY(-1px); }
+  .btn:active { transform: none; }
+  .btn-amber { background: var(--amber); color: white; }
+  .btn-navy { background: var(--navy); color: white; }
+  .btn-green { background: var(--grn); color: white; }
+  .btn-purple { background: var(--purp); color: white; }
+  .btn-ghost { background: var(--graylt); color: var(--gray); }
+  .btn-ghost-purp { background: transparent; color: var(--purp); border: 1px solid var(--purp) !important; }
+  .btn-sm { padding: 7px 14px; font-size: 12px; }
+  .btn:disabled { opacity: 0.45; cursor: default; transform: none; filter: none; }
+
+  /* ─── STEP CONTROLS ─── */
+  .step-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    flex-wrap: wrap;
+  }
+  .step-counter {
+    font-size: 12px;
+    color: var(--gray);
+    margin-left: auto;
+    margin-right: 8px;
+  }
+
+  /* ─── METHOD TABS ─── */
+  .method-nav { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+  .method-btn {
+    padding: 8px 14px;
+    border-radius: 8px 8px 4px 4px;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    font-family: var(--font-body);
+    background: var(--graylt);
+    color: var(--gray);
+    transition: all 0.15s;
+  }
+  .method-btn:hover:not(.active) { background: var(--border); }
+  .method-btn.active-navy { background: var(--navy); color: white; border-bottom-color: var(--amber); }
+  .method-btn.active-purple { background: var(--purp); color: white; border-bottom-color: #c4b5fd; }
+
+  /* ─── WORK AREA ─── */
+  .work-area {
+    background: var(--graylt);
+    border-radius: 10px;
+    padding: 18px;
+    min-height: 200px;
+    transition: min-height 0.3s;
+  }
+
+  /* ─── RESULT BANNER ─── */
+  .result-banner {
+    background: var(--amberlt);
+    border-radius: 12px;
+    padding: 18px;
+    text-align: center;
+    border: 2px solid rgba(217,119,6,0.25);
+    margin-top: 10px;
+    animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .result-banner.purple {
+    background: var(--purplt);
+    border-color: rgba(91,33,182,0.2);
+  }
+  .result-banner .rb-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--amberdk);
+    margin-bottom: 6px;
+  }
+  .result-banner.purple .rb-label { color: var(--purp); }
+  .result-banner .rb-value {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--amberdk);
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  .result-banner.purple .rb-value { color: var(--purp); }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+
+  /* ─── GRIDS ─── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: start; }
+  @media (max-width: 540px) {
+    .grid-2 { grid-template-columns: 1fr; }
+    .grid-3 { grid-template-columns: 1fr; }
+  }
+
+  /* ─── PF CARD ─── */
+  .pf-card {
+    background: var(--graylt);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+  }
+  .pf-card .pf-n { font-size: 12px; color: var(--gray); margin-bottom: 4px; }
+  .pf-card .pf-val { font-size: 20px; font-weight: 800; color: var(--navy); letter-spacing: -0.01em; }
+
+  /* ─── VENN ─── */
+  .venn-col {
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+  .venn-col .venn-lbl {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .venn-col .venn-item { font-size: 14px; font-weight: 700; line-height: 2; }
+  .venn-col .venn-sub { font-size: 10px; font-weight: 400; opacity: 0.7; }
+  .venn-a  { background: #fef9c3; }
+  .venn-a  .venn-lbl, .venn-a .venn-item { color: #713f12; }
+  .venn-mid-gcf { background: var(--grnlt); border: 2px solid rgba(6,95,70,0.3); }
+  .venn-mid-gcf .venn-lbl, .venn-mid-gcf .venn-item { color: var(--grn); }
+  .venn-mid-lcm { background: var(--purplt); border: 2px solid rgba(91,33,182,0.2); }
+  .venn-mid-lcm .venn-lbl, .venn-mid-lcm .venn-item { color: var(--purp); }
+  .venn-b { background: #ede9fe; }
+  .venn-b .venn-lbl, .venn-b .venn-item { color: var(--purp); }
+
+  /* ─── EUCLID STEPS ─── */
+  .euclid-step {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-radius: 8px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    border: 1px solid transparent;
+    transition: all 0.2s;
+    animation: slideIn 0.25s ease;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; } }
+  .euclid-step.current { background: var(--amberlt); border-color: rgba(217,119,6,0.4); }
+  .euclid-step.done    { background: var(--graylt); }
+  .euclid-step .es-eq  { font-size: 15px; font-weight: 700; flex: 1; }
+  .euclid-step .es-div { font-size: 12px; color: var(--gray); flex-shrink: 0; }
+  .es-r  { color: var(--amber); font-weight: 800; }
+  .es-r0 { color: var(--grn); font-weight: 800; }
+
+  /* ─── CONCEPT CARDS ─── */
+  .def-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 18px; }
+  @media (max-width: 540px) { .def-grid { grid-template-columns: 1fr; } }
+  .def-card { border-radius: 14px; padding: 20px; border: 1px solid var(--border); background: white; }
+  .def-card.amber-top { border-top: 4px solid var(--amber); }
+  .def-card.purp-top  { border-top: 4px solid var(--purp); }
+  .def-card .hint-box {
+    border-radius: 8px;
+    padding: 11px 14px;
+    font-size: 13px;
+    line-height: 1.6;
+    margin-top: 10px;
+  }
+
+  /* ─── EXPLORER MONOSPACE ─── */
+  .mono { font-family: 'Courier New', Courier, monospace; font-size: 11px; color: var(--gray); line-height: 2.0; white-space: pre; }
+
+  /* ─── INSIGHT BAR ─── */
+  .insight-bar {
+    background: var(--navydk);
+    color: white;
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+
+  /* ─── PRACTICE ─── */
+  .score-bar {
+    background: var(--navydk);
+    color: white;
+    border-radius: 14px;
+    padding: 16px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+  }
+  .score-bar .score-lbl { font-size: 13px; opacity: 0.7; }
+  .score-nums { display: flex; align-items: center; gap: 16px; }
+  .score-num { text-align: center; }
+  .score-num .sn-val { font-size: 26px; font-weight: 800; color: var(--amberlt); }
+  .score-num .sn-sub { font-size: 10px; opacity: 0.55; }
+  .score-pct { font-size: 14px; font-weight: 700; color: var(--amberlt); }
+
+  .prob-display {
+    background: linear-gradient(135deg, var(--navydk) 0%, var(--navymd) 100%);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    margin-bottom: 22px;
+  }
+  .prob-display .pd-ask { font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+  .prob-display .pd-type { font-size: 17px; font-weight: 700; color: var(--amberlt); margin-bottom: 10px; }
+  .prob-display .pd-nums {
+    font-size: clamp(36px, 8vw, 52px);
+    font-weight: 900;
+    color: white;
+    font-family: var(--font-display);
+    letter-spacing: -0.03em;
+  }
+
+  .ans-row { display: flex; gap: 14px; align-items: flex-end; flex-wrap: wrap; margin-bottom: 16px; }
+
+  .feedback {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    animation: popIn 0.25s ease;
+  }
+  .feedback .fb-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .feedback .fb-detail { font-size: 13px; opacity: 0.85; }
+  .feedback.correct { background: var(--grnlt); border: 1px solid rgba(6,95,70,0.3); }
+  .feedback.correct .fb-title { color: var(--grn); }
+  .feedback.wrong   { background: var(--redlt); border: 1px solid rgba(153,27,27,0.3); }
+  .feedback.wrong .fb-title, .feedback.wrong .fb-detail { color: var(--red); }
+
+  /* ─── SOLUTION ─── */
+  .sol-section {
+    border-radius: 10px;
+    padding: 14px 16px;
+    margin-bottom: 12px;
+  }
+  .sol-section .sol-head { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px; }
+  .sol-section .sol-body { font-size: 13px; line-height: 1.8; margin-bottom: 8px; }
+  .sol-section .sol-answer { font-size: 20px; font-weight: 800; }
+  .sol-amber { background: var(--amberlt); }
+  .sol-amber .sol-head, .sol-amber .sol-body, .sol-amber .sol-answer { color: var(--amberdk); }
+  .sol-purple { background: var(--purplt); }
+  .sol-purple .sol-head, .sol-purple .sol-body, .sol-purple .sol-answer { color: var(--purp); }
+
+  /* ─── UTILITY ─── */
+  .mt-10 { margin-top: 10px; }
+  .mt-14 { margin-top: 14px; }
+  .mb-12 { margin-bottom: 12px; }
+  .text-center { text-align: center; }
+  .text-sm { font-size: 13px; }
+  .text-xs { font-size: 12px; }
+  .text-gray { color: var(--gray); }
+  .text-green { color: var(--grn); }
+  .text-amber { color: var(--amber); }
+  .text-amberdk { color: var(--amberdk); }
+  .text-purp { color: var(--purp); }
+  .text-red { color: var(--red); }
+  .text-white { color: white; }
+  .font-bold { font-weight: 700; }
+  .font-800 { font-weight: 800; }
+  .flex { display: flex; }
+  .flex-wrap { flex-wrap: wrap; }
+  .items-center { align-items: center; }
+  .justify-between { justify-content: space-between; }
+  .gap-6  { gap: 6px; }
+  .gap-8  { gap: 8px; }
+  .gap-12 { gap: 12px; }
+  .gap-14 { gap: 14px; }
+  .hidden { display: none !important; }
+  sup { font-size: 0.7em; }
+
+  /* ─── RELATIVE PRIME BOX ─── */
+  .rel-prime-box {
+    background: var(--teallt);
+    border: 1px solid rgba(14,116,144,0.3);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 18px;
+    animation: popIn 0.3s ease;
+  }
+  .rel-prime-box .h3 { color: var(--teal); }
+  .rel-prime-box p { color: var(--teal); font-size: 14px; }
+
+  /* ─── IDENTITY BOX ─── */
+  .identity-box {
+    border-left: 4px solid var(--purp);
+  }
+  .identity-box .h3 { color: var(--purp); }
+
+  /* ─── BUS BOX ─── */
+  .bus-box {
+    border-left: 4px solid var(--purp);
+  }
+
+  /* ─── DIFF TABLE ─── */
+  .diff-table { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 13px; }
+  @media (max-width: 480px) { .diff-table { grid-template-columns: 1fr; } }
+  .diff-cell { border-radius: 8px; padding: 12px; line-height: 1.75; }
+  .diff-amber { background: var(--amberlt); color: var(--amberdk); }
+  .diff-purple { background: var(--purplt); color: var(--purp); }
+
+  /* ─── QUICK CHECK ─── */
+  .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 14px; color: var(--teal); }
+  .quick-cell { background: rgba(255,255,255,0.6); border-radius: 8px; padding: 12px; }
+  @media (max-width: 480px) { .quick-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="site-header">
+  <div class="kicker">Math 204 · Section 5.2 · Santa Ana College</div>
+  <h1>Factors, Multiples, GCF &amp; LCM</h1>
+  <p class="sub">Interactive Learning Explorer · Dr. Romero</p>
+</div>
+
+<!-- TAB NAV -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="switchTab('concepts', this)">Factors &amp; Multiples</button>
+  <button class="tab-btn" onclick="switchTab('gcf', this)">Finding GCF</button>
+  <button class="tab-btn" onclick="switchTab('lcm', this)">Finding LCM</button>
+  <button class="tab-btn" onclick="switchTab('practice', this)">✦ Practice</button>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- ═══ TAB: CONCEPTS ═══ -->
+<section id="tab-concepts" class="tab-panel active">
+
+  <div class="def-grid">
+    <div class="def-card amber-top">
+      <span class="badge badge-amber">FACTORS</span>
+      <div class="h2" style="font-size:19px;">Divide <em>into</em> n</div>
+      <p class="text-sm text-gray" style="line-height:1.65;margin-bottom:0">
+        A <strong style="color:var(--navy)">factor</strong> of n is a whole number that divides evenly into n — no remainder.
+        Factors are always <strong>≤ n</strong>.
+      </p>
+      <div class="hint-box" style="background:var(--amberlt);color:var(--amberdk)">
+        <strong>Ask:</strong> "Does n ÷ f = whole number?"<br>
+        4 is a factor of 12 → 12 ÷ 4 = 3 ✓
+      </div>
+    </div>
+    <div class="def-card purp-top">
+      <span class="badge badge-purple">MULTIPLES</span>
+      <div class="h2" style="font-size:19px;color:var(--purp)">Extend <em>beyond</em> n</div>
+      <p class="text-sm text-gray" style="line-height:1.65;margin-bottom:0">
+        A <strong style="color:var(--purp)">multiple</strong> of n is n multiplied by any whole number.
+        Multiples are always <strong>≥ n</strong>.
+      </p>
+      <div class="hint-box" style="background:var(--purplt);color:var(--purp)">
+        <strong>Ask:</strong> "Is m in n's times table?"<br>
+        36 is a multiple of 12 → 12 × 3 = 36 ✓
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-bar">
+    <span style="color:var(--amberlt);font-weight:700">Factors</span> are <em>smaller or equal</em> — they fit <em>inside</em> n
+    <span style="opacity:0.35;margin:0 14px">|</span>
+    <span style="color:#c4b5fd;font-weight:700">Multiples</span> are <em>larger or equal</em> — they grow <em>beyond</em> n
+    <br><span style="opacity:0.4;font-size:12px">Every number is both a factor of itself and a multiple of itself.</span>
+  </div>
+
+  <!-- Explorer -->
+  <div class="card">
+    <div class="flex justify-between items-center flex-wrap gap-12" style="margin-bottom:20px">
+      <div class="h2">🔭 Number Explorer</div>
+      <div class="flex items-center gap-8">
+        <span class="lbl" style="margin:0">Pick a number (1–100):</span>
+        <input type="number" id="explorer-num" class="num-input" value="12" min="1" max="100"
+          oninput="renderExplorer()" style="width:70px" />
+      </div>
+    </div>
+    <div class="grid-2" id="explorer-grid"><!-- rendered by JS --></div>
+  </div>
+
+  <!-- Quick check -->
+  <div class="card card-teal" style="background:var(--teallt);border-color:rgba(14,116,144,0.2)">
+    <div class="h3" style="color:var(--teal)">💡 Quick Memory Check</div>
+    <div class="quick-grid">
+      <div class="quick-cell"><strong>Is 7 a factor of 42?</strong><br><span style="opacity:.8">42 ÷ 7 = 6 → Yes ✓</span></div>
+      <div class="quick-cell"><strong>Is 42 a multiple of 7?</strong><br><span style="opacity:.8">7 × 6 = 42 → Yes ✓ (same fact!)</span></div>
+      <div class="quick-cell"><strong>Is 5 a factor of 42?</strong><br><span style="opacity:.8">42 ÷ 5 = 8.4 → No ✗</span></div>
+      <div class="quick-cell"><strong>Is 50 a multiple of 7?</strong><br><span style="opacity:.8">50 ÷ 7 = 7.14… → No ✗</span></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══ TAB: GCF ═══ -->
+<section id="tab-gcf" class="tab-panel">
+
+  <div class="card card-dark" style="margin-bottom:18px">
+    <div class="lbl" style="color:var(--amberlt);margin-bottom:6px">Definition</div>
+    <p style="font-size:15px;line-height:1.7;opacity:.92">
+      The <strong style="color:var(--amberlt)">Greatest Common Factor</strong> is the <em>largest whole number that divides evenly into both numbers</em>.
+      Your textbook presents three methods — pick whichever fits best!
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="h2">Step-by-Step GCF Explorer</div>
+    <div class="pair-row">
+      <div><span class="lbl">Number A</span><input type="number" id="gcf-a" class="num-input" value="36" min="2" max="500" oninput="gcfReset()"></div>
+      <div class="pair-amp">&amp;</div>
+      <div><span class="lbl">Number B</span><input type="number" id="gcf-b" class="num-input" value="54" min="2" max="500" oninput="gcfReset()"></div>
+    </div>
+
+    <div class="method-nav">
+      <button class="method-btn active-navy" id="gcf-mb-set"   onclick="setGcfMethod('set')">Set Intersection</button>
+      <button class="method-btn"             id="gcf-mb-prime" onclick="setGcfMethod('prime')">Prime Factorization</button>
+      <button class="method-btn"             id="gcf-mb-euclid"onclick="setGcfMethod('euclid')">Euclidean Algorithm</button>
+    </div>
+
+    <div class="work-area" id="gcf-work"><!-- rendered --></div>
+
+    <div class="step-controls">
+      <button class="btn btn-ghost btn-sm" id="gcf-reset-btn" onclick="gcfReset()">↺ Reset</button>
+      <button class="btn btn-navy btn-sm" id="gcf-next-btn" onclick="gcfNext()">Next Step →</button>
+      <span class="step-counter" id="gcf-counter">Step 0/3</span>
+      <button class="btn btn-ghost btn-sm" onclick="gcfShowAll()">Show All</button>
+    </div>
+  </div>
+
+  <!-- Relatively prime callout (hidden by default) -->
+  <div id="rel-prime-box" class="rel-prime-box hidden">
+    <div class="h3">⭐ Relatively Prime!</div>
+    <p id="rel-prime-text"></p>
+  </div>
+
+  <!-- Identity -->
+  <div class="card identity-box">
+    <div class="h3">📐 Key Relationship: GCF × LCM = a × b</div>
+    <div class="text-sm" style="color:var(--purp);line-height:1.9" id="gcf-identity">—</div>
+  </div>
+
+</section>
+
+<!-- ═══ TAB: LCM ═══ -->
+<section id="tab-lcm" class="tab-panel">
+
+  <div class="card" style="background:linear-gradient(135deg,var(--purp) 0%,#7c3aed 100%);color:white;margin-bottom:18px">
+    <div class="lbl" style="color:#c4b5fd;margin-bottom:6px">Definition</div>
+    <p style="font-size:15px;line-height:1.7;opacity:.92">
+      The <strong style="color:#e9d5ff">Least Common Multiple</strong> is the <em>smallest nonzero whole number that is a multiple of both numbers</em>.
+      Essential for adding fractions and solving real-world scheduling problems.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="h2">Step-by-Step LCM Explorer</div>
+    <div class="pair-row">
+      <div><span class="lbl">Number A</span><input type="number" id="lcm-a" class="num-input" value="9" min="2" max="200" oninput="lcmReset()"></div>
+      <div class="pair-amp">&amp;</div>
+      <div><span class="lbl">Number B</span><input type="number" id="lcm-b" class="num-input" value="12" min="2" max="200" oninput="lcmReset()"></div>
+    </div>
+
+    <div class="method-nav">
+      <button class="method-btn active-purple" id="lcm-mb-set"   onclick="setLcmMethod('set')">Set Intersection</button>
+      <button class="method-btn"               id="lcm-mb-prime" onclick="setLcmMethod('prime')">Prime Factorization</button>
+    </div>
+
+    <div class="work-area" id="lcm-work"><!-- rendered --></div>
+
+    <div class="step-controls">
+      <button class="btn btn-ghost btn-sm" onclick="lcmReset()">↺ Reset</button>
+      <button class="btn btn-purple btn-sm" id="lcm-next-btn" onclick="lcmNext()">Next Step →</button>
+      <span class="step-counter" id="lcm-counter">Step 0/3</span>
+      <button class="btn btn-ghost btn-sm" onclick="lcmShowAll()">Show All</button>
+    </div>
+  </div>
+
+  <!-- GCF vs LCM contrast -->
+  <div class="card mb-12">
+    <div class="h3">GCF vs. LCM via Prime Factorization — The Critical Difference</div>
+    <div class="diff-table">
+      <div class="diff-cell diff-amber"><strong>GCF</strong><br>• Only <strong>shared</strong> primes<br>• Use <strong>minimum</strong> exponent<br>• Result ≤ both numbers</div>
+      <div class="diff-cell diff-purple"><strong>LCM</strong><br>• <strong>All</strong> primes from either<br>• Use <strong>maximum</strong> exponent<br>• Result ≥ both numbers</div>
+    </div>
+  </div>
+
+  <!-- Bus scenario -->
+  <div class="card bus-box mb-12">
+    <div class="h3" style="color:var(--purp)">🚌 Textbook Scenario: The Bus Problem</div>
+    <p class="text-sm text-gray" style="line-height:1.65;margin-bottom:10px">
+      Two buses stop at the same station — one every <strong id="bus-a-disp">9</strong> minutes, another every <strong id="bus-b-disp">12</strong> minutes.
+      If they both arrive at noon, when will they next arrive together?
+    </p>
+    <div class="text-sm font-bold" style="color:var(--purp)" id="bus-answer"></div>
+  </div>
+
+  <!-- Identity -->
+  <div class="card card-green" style="background:var(--grnlt);border-color:rgba(6,95,70,0.2)">
+    <div class="h3 text-green">💡 Verify: GCF × LCM = a × b</div>
+    <div class="text-sm text-green" style="line-height:1.9" id="lcm-identity"></div>
+  </div>
+
+</section>
+
+<!-- ═══ TAB: PRACTICE ═══ -->
+<section id="tab-practice" class="tab-panel">
+
+  <div class="score-bar">
+    <div class="score-lbl">Practice Score</div>
+    <div class="score-nums">
+      <div class="score-num"><div class="sn-val" id="score-correct">0</div><div class="sn-sub">Correct</div></div>
+      <div style="font-size:20px;opacity:0.3">/</div>
+      <div class="score-num"><div class="sn-val" style="color:white" id="score-total">0</div><div class="sn-sub">Total</div></div>
+      <div class="score-pct" id="score-pct" style="display:none"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="flex justify-between items-center flex-wrap gap-12" style="margin-bottom:18px">
+      <div class="h2">Practice Problem</div>
+      <button class="btn btn-ghost btn-sm" onclick="generateProblem()">New Problem ↻</button>
+    </div>
+
+    <div class="prob-display">
+      <div class="pd-ask">Find the</div>
+      <div class="pd-type" id="pd-type">—</div>
+      <div class="pd-nums" id="pd-nums">— &amp; —</div>
+    </div>
+
+    <div class="ans-row" id="ans-row"><!-- rendered --></div>
+
+    <div id="feedback-box" class="hidden"></div>
+
+    <button class="btn btn-ghost-purp btn-sm" style="margin-top:4px" onclick="toggleSolution()">
+      <span id="sol-toggle-label">👁 Show Worked Solution</span>
+    </button>
+  </div>
+
+  <div id="solution-box" class="card hidden">
+    <div class="h3">📝 Worked Solution: Prime Factorization Method</div>
+    <p class="text-sm text-gray" style="margin-bottom:14px">
+      This method works cleanly for any pair. You can verify with Set Intersection or the Euclidean Algorithm.
+    </p>
+    <div id="solution-content"><!-- rendered --></div>
+  </div>
+
+</section>
+</main>
+
+<script>
+/* ═══════════════════════════════════════════
+   MATH UTILS
+═══════════════════════════════════════════ */
+const getFactors = n => { const f=[]; for(let i=1;i<=n;i++) if(n%i===0) f.push(i); return f; };
+const getMultiples = (n,k=12) => Array.from({length:k},(_,i)=>n*(i+1));
+function primeFactorize(n){
+  const f={};let d=2,m=n;
+  while(d*d<=m){while(m%d===0){f[d]=(f[d]||0)+1;m/=d;}d++;}
+  if(m>1)f[m]=(f[m]||0)+1;
+  return f;
+}
+function gcd(a,b){return b===0?a:gcd(b,a%b);}
+function lcm(a,b){return(a*b)/gcd(a,b);}
+function euclidSteps(a,b){
+  let big=Math.max(a,b),small=Math.min(a,b);const s=[];
+  while(small>0){const q=Math.floor(big/small),r=big%small;s.push({big,small,q,r});[big,small]=[small,r];}
+  return s;
+}
+function formatPF(pf){
+  return Object.entries(pf).sort(([a],[b])=>+a-+b)
+    .map(([p,e])=>e>1?`${p}<sup>${e}</sup>`:p).join(' × ')||'1';
+}
+function fmtPFtext(pf){
+  return Object.entries(pf).sort(([a],[b])=>+a-+b)
+    .map(([p,e])=>e>1?`${p}^${e}`:p).join('×')||'1';
+}
+
+/* ═══════════════════════════════════════════
+   TAB SWITCHING
+═══════════════════════════════════════════ */
+function switchTab(id, btn){
+  document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   CONCEPTS TAB — EXPLORER
+═══════════════════════════════════════════ */
+function renderExplorer(){
+  const n = Math.max(1, Math.min(100, parseInt(document.getElementById('explorer-num').value)||1));
+  const factors = getFactors(n);
+  const multiples = getMultiples(n,12);
+  const g = document.getElementById('explorer-grid');
+
+  let fChips = factors.map(f=>`<span class="chip hl-amber" title="${n} ÷ ${f} = ${n/f}">${f}</span>`).join('');
+  let mChips = multiples.map((m,i)=>`<span class="chip hl-purple" title="${n} × ${i+1} = ${m}">${m}</span>`).join('');
+  let fMono = factors.map(f=>`${n} ÷ ${f} = ${n/f}`).join('\n');
+  let mMono = Array.from({length:12},(_,i)=>`${n} × ${i+1} = ${n*(i+1)}`).join('\n');
+
+  g.innerHTML = `
+    <div>
+      <div class="flex justify-between items-center" style="margin-bottom:8px">
+        <span class="lbl" style="color:var(--amberdk);margin:0">Factors of ${n}</span>
+        <span class="text-xs font-bold text-amber">${factors.length} total</span>
+      </div>
+      <div class="chip-wrap mb-12">${fChips}</div>
+      <div class="mono">${fMono}</div>
+    </div>
+    <div>
+      <div class="flex justify-between items-center" style="margin-bottom:8px">
+        <span class="lbl" style="color:var(--purp);margin:0">First 12 Multiples of ${n}</span>
+        <span class="text-xs font-bold text-purp">and on…</span>
+      </div>
+      <div class="chip-wrap mb-12">${mChips}</div>
+      <div class="mono">${mMono}</div>
+    </div>`;
+}
+renderExplorer();
+
+/* ═══════════════════════════════════════════
+   GCF TAB
+═══════════════════════════════════════════ */
+let gcfMethod = 'set', gcfStep = 0, gcfMaxStep = 3;
+
+function getGcfNums(){
+  const a=Math.max(2,Math.min(500,parseInt(document.getElementById('gcf-a').value)||2));
+  const b=Math.max(2,Math.min(500,parseInt(document.getElementById('gcf-b').value)||2));
+  return {a,b};
+}
+
+function setGcfMethod(m){
+  gcfMethod=m;
+  ['set','prime','euclid'].forEach(id=>{
+    const btn=document.getElementById('gcf-mb-'+id);
+    btn.classList.toggle('active-navy', id===m);
+    btn.classList.remove('active-purple');
+  });
+  const {a,b}=getGcfNums();
+  const steps=euclidSteps(a,b);
+  gcfMaxStep = m==='euclid' ? steps.length+1 : 3;
+  gcfReset();
+}
+
+function gcfReset(){
+  gcfStep=0;
+  const {a,b}=getGcfNums();
+  const steps=euclidSteps(a,b);
+  gcfMaxStep = gcfMethod==='euclid' ? steps.length+1 : 3;
+  renderGCF();
+  updateGcfSidebar();
+}
+
+function gcfNext(){
+  if(gcfStep<gcfMaxStep){gcfStep++;renderGCF();}
+}
+function gcfShowAll(){gcfStep=gcfMaxStep;renderGCF();}
+
+function renderGCF(){
+  const {a,b}=getGcfNums();
+  document.getElementById('gcf-counter').textContent=`Step ${gcfStep}/${gcfMaxStep}`;
+  document.getElementById('gcf-next-btn').disabled=(gcfStep>=gcfMaxStep);
+  document.getElementById('gcf-reset-btn').disabled=(gcfStep===0);
+
+  const work=document.getElementById('gcf-work');
+  if(gcfMethod==='set')   work.innerHTML=renderGCFSet(a,b);
+  if(gcfMethod==='prime') work.innerHTML=renderGCFPrime(a,b);
+  if(gcfMethod==='euclid')work.innerHTML=renderGCFEuclid(a,b);
+}
+
+function renderGCFSet(a,b){
+  const fa=getFactors(a), fb=getFactors(b);
+  const common=fa.filter(f=>fb.includes(f));
+  const theGCF=gcd(a,b);
+  let html='';
+  if(gcfStep>=1){
+    html+=`<div style="margin-bottom:18px">
+      <div class="lbl" style="margin-bottom:10px">Step 1 — List ALL factors of each number</div>
+      <div style="margin-bottom:12px">
+        <div class="text-xs text-gray font-bold" style="margin-bottom:6px">Factors of ${a}:</div>
+        <div class="chip-wrap">
+          ${fa.map(f=>`<span class="chip${gcfStep>=2&&common.includes(f)?gcfStep>=3&&f===theGCF?' hl-amber hl-bold':' hl-green':''}">${f}</span>`).join('')}
+        </div>
+      </div>
+      <div>
+        <div class="text-xs text-gray font-bold" style="margin-bottom:6px">Factors of ${b}:</div>
+        <div class="chip-wrap">
+          ${fb.map(f=>`<span class="chip${gcfStep>=2&&common.includes(f)?gcfStep>=3&&f===theGCF?' hl-amber hl-bold':' hl-green':''}">${f}</span>`).join('')}
+        </div>
+      </div>
+    </div>`;
+  }
+  if(gcfStep>=2){
+    html+=`<div style="margin-bottom:14px">
+      <div class="lbl text-green" style="margin-bottom:8px">Step 2 — Circle the common factors (highlighted above)</div>
+      <div class="chip-wrap">
+        ${common.map(f=>`<span class="chip${gcfStep>=3&&f===theGCF?' hl-amber hl-bold':' hl-green'}">${f}</span>`).join('')}
+      </div>
+      <div class="text-xs text-green mt-10">Common factors: {${common.join(', ')}}</div>
+    </div>`;
+  }
+  if(gcfStep>=3){
+    html+=`<div class="result-banner"><div class="rb-label">Step 3 — Choose the GREATEST common factor</div><div class="rb-value">GCF(${a}, ${b}) = ${theGCF}</div></div>`;
+  }
+  return html||'<p class="text-sm text-gray">Press "Next Step →" to begin.</p>';
+}
+
+function renderGCFPrime(a,b){
+  const pfA=primeFactorize(a), pfB=primeFactorize(b);
+  const allP=[...new Set([...Object.keys(pfA),...Object.keys(pfB)].map(Number))].sort((x,y)=>x-y);
+  const shared=allP.filter(p=>pfA[p]&&pfB[p]);
+  const onlyA=allP.filter(p=>pfA[p]&&!pfB[p]);
+  const onlyB=allP.filter(p=>!pfA[p]&&pfB[p]);
+  const theGCF=gcd(a,b);
+  let html='';
+  if(gcfStep>=1){
+    html+=`<div style="margin-bottom:18px">
+      <div class="lbl" style="margin-bottom:10px">Step 1 — Write the prime factorization of each</div>
+      <div class="grid-2">
+        <div class="pf-card"><div class="pf-n">${a} =</div><div class="pf-val">${formatPF(pfA)}</div></div>
+        <div class="pf-card"><div class="pf-n">${b} =</div><div class="pf-val">${formatPF(pfB)}</div></div>
+      </div>
+    </div>`;
+  }
+  if(gcfStep>=2){
+    const aItems=onlyA.length?onlyA.map(p=>`<div class="venn-item">${p}${pfA[p]>1?`<sup>${pfA[p]}</sup>`:''}</div>`).join(''):`<div class="text-xs text-gray">—</div>`;
+    const bItems=onlyB.length?onlyB.map(p=>`<div class="venn-item">${p}${pfB[p]>1?`<sup>${pfB[p]}</sup>`:''}</div>`).join(''):`<div class="text-xs text-gray">—</div>`;
+    const mItems=shared.length?shared.map(p=>{const e=Math.min(pfA[p],pfB[p]);return`<div class="venn-item">${p}${e>1?`<sup>${e}</sup>`:''}<span class="venn-sub"> min(${pfA[p]},${pfB[p]})</span></div>`}).join(''):`<div class="text-xs" style="color:var(--grn)">None → GCF=1</div>`;
+    html+=`<div style="margin-bottom:14px">
+      <div class="lbl text-green" style="margin-bottom:10px">Step 2 — Find SHARED primes, use MINIMUM exponent</div>
+      <div class="grid-3">
+        <div class="venn-col venn-a"><div class="venn-lbl">Only in ${a}</div>${aItems}</div>
+        <div class="venn-col venn-mid-gcf"><div class="venn-lbl">SHARED → GCF</div>${mItems}</div>
+        <div class="venn-col venn-b"><div class="venn-lbl">Only in ${b}</div>${bItems}</div>
+      </div>
+      <div class="text-xs text-gray mt-10 text-center">GCF uses only the <strong style="color:var(--grn)">shared (middle) section</strong> with minimum exponents.</div>
+    </div>`;
+  }
+  if(gcfStep>=3){
+    const expr=shared.length?shared.map(p=>{const e=Math.min(pfA[p],pfB[p]);return e>1?`${p}<sup>${e}</sup>`:p}).join(' × ')+'` = '+theGCF:`1 (Relatively Prime!)`;
+    html+=`<div class="result-banner"><div class="rb-label">Step 3 — Multiply the shared prime factors</div><div class="rb-value">${shared.length?`${shared.map(p=>{const e=Math.min(pfA[p],pfB[p]);return e>1?`${p}<sup>${e}</sup>`:p}).join(' × ')} = GCF(${a}, ${b}) = ${theGCF}`:`GCF(${a}, ${b}) = 1  (Relatively Prime!)`}</div></div>`;
+  }
+  return html||'<p class="text-sm text-gray">Press "Next Step →" to begin.</p>';
+}
+
+function renderGCFEuclid(a,b){
+  const steps=euclidSteps(a,b);
+  const theGCF=gcd(a,b);
+  let html=`<div style="background:rgba(15,35,54,0.08);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--navy);margin-bottom:14px;line-height:1.6">
+    <strong>How it works:</strong> Divide the larger by the smaller. Replace the pair with (smaller, remainder). Repeat until remainder = 0. The last non-zero number is the GCF.<br>
+    <span style="color:var(--red);font-weight:700">⚠️ Always write the REMAINDER — never the quotient!</span>
+  </div>`;
+  const visible=steps.slice(0,Math.min(gcfStep,steps.length));
+  visible.forEach((s,i)=>{
+    const isCurrent=(i===visible.length-1);
+    const rClass=s.r===0?'es-r0':'es-r';
+    html+=`<div class="euclid-step ${isCurrent?'current':'done'}">
+      <div class="es-eq">GCF(${s.big}, ${s.small}) = GCF(${s.small}, <span class="${rClass}">${s.r}</span>)</div>
+      <div class="es-div">${s.big} ÷ ${s.small} = ${s.q} R <strong class="${rClass}">${s.r}</strong></div>
+    </div>`;
+  });
+  if(gcfStep>=steps.length+1){
+    html+=`<div class="result-banner"><div class="rb-label">Remainder = 0 → The divisor (${theGCF}) is the GCF</div><div class="rb-value">GCF(${a}, ${b}) = ${theGCF}</div></div>`;
+  }
+  return html||'<p class="text-sm text-gray">Press "Next Step →" to begin.</p>';
+}
+
+function updateGcfSidebar(){
+  const {a,b}=getGcfNums();
+  const theGCF=gcd(a,b), theLCM=lcm(a,b);
+  // Relatively prime
+  const rpBox=document.getElementById('rel-prime-box');
+  const rpTxt=document.getElementById('rel-prime-text');
+  if(theGCF===1){
+    rpTxt.textContent=`GCF(${a}, ${b}) = 1, so these numbers are relatively prime — they share no common factors other than 1.`;
+    rpBox.classList.remove('hidden');
+  } else {
+    rpBox.classList.add('hidden');
+  }
+  // Identity
+  document.getElementById('gcf-identity').innerHTML=
+    `GCF(${a}, ${b}) × LCM(${a}, ${b}) = ${a} × ${b}<br><strong>${theGCF} × ${theLCM} = ${theGCF*theLCM}</strong> <span style="color:var(--grn)">✓</span>`;
+}
+
+// Init GCF
+setGcfMethod('set');
+document.getElementById('gcf-a').addEventListener('change', ()=>{gcfReset(); updateGcfSidebar();});
+document.getElementById('gcf-b').addEventListener('change', ()=>{gcfReset(); updateGcfSidebar();});
+updateGcfSidebar();
+
+/* ═══════════════════════════════════════════
+   LCM TAB
+═══════════════════════════════════════════ */
+let lcmMethod='set', lcmStep=0, lcmMaxStep=3;
+
+function getLcmNums(){
+  const a=Math.max(2,Math.min(200,parseInt(document.getElementById('lcm-a').value)||2));
+  const b=Math.max(2,Math.min(200,parseInt(document.getElementById('lcm-b').value)||2));
+  return {a,b};
+}
+
+function setLcmMethod(m){
+  lcmMethod=m;
+  ['set','prime'].forEach(id=>{
+    const btn=document.getElementById('lcm-mb-'+id);
+    btn.classList.toggle('active-purple', id===m);
+  });
+  lcmReset();
+}
+
+function lcmReset(){lcmStep=0;renderLCM();}
+function lcmNext(){if(lcmStep<3){lcmStep++;renderLCM();}}
+function lcmShowAll(){lcmStep=3;renderLCM();}
+
+function renderLCM(){
+  const {a,b}=getLcmNums();
+  const theLCM=lcm(a,b), theGCF=gcd(a,b);
+  document.getElementById('lcm-counter').textContent=`Step ${lcmStep}/3`;
+  document.getElementById('lcm-next-btn').disabled=(lcmStep>=3);
+
+  // Bus & identity
+  document.getElementById('bus-a-disp').textContent=a;
+  document.getElementById('bus-b-disp').textContent=b;
+  document.getElementById('bus-answer').textContent=`LCM(${a}, ${b}) = ${theLCM} → They meet again after ${theLCM} minutes.`;
+  document.getElementById('lcm-identity').innerHTML=`<strong>${theGCF} × ${theLCM} = ${theGCF*theLCM}</strong> <span style="opacity:.7">= ${a} × ${b} = ${a*b}</span> ✓`;
+
+  const work=document.getElementById('lcm-work');
+  if(lcmMethod==='set')   work.innerHTML=renderLCMSet(a,b,theLCM);
+  if(lcmMethod==='prime') work.innerHTML=renderLCMPrime(a,b,theLCM);
+}
+
+function renderLCMSet(a,b,theLCM){
+  const MAX=20;
+  const ma=getMultiples(a,MAX), mb=getMultiples(b,MAX);
+  const hasA=ma.includes(theLCM), hasB=mb.includes(theLCM);
+  let html='';
+  if(lcmStep>=1){
+    const warn = (!hasA||!hasB)?`<div class="text-xs text-red" style="margin-bottom:8px">Note: LCM(${a},${b}) = ${theLCM} — showing first ${MAX} multiples.</div>`:'';
+    html+=`<div style="margin-bottom:16px">
+      <div class="lbl" style="margin-bottom:10px">Step 1 — List nonzero multiples until a common one appears</div>
+      ${warn}
+      ${[{n:a,ms:ma,has:hasA},{n:b,ms:mb,has:hasB}].map(({n,ms,has})=>`
+        <div style="margin-bottom:12px">
+          <div class="text-xs font-bold text-gray" style="margin-bottom:6px">Multiples of ${n}:</div>
+          <div class="chip-wrap" style="align-items:center">
+            ${ms.map(m=>`<span class="chip${lcmStep>=2&&m===theLCM&&has?' hl-purple'+(lcmStep>=3?' hl-bold':''):''}">${m}</span>`).join('')}
+            <span style="font-size:18px;color:var(--gray);margin-left:4px">…</span>
+          </div>
+        </div>`).join('')}
+    </div>`;
+  }
+  if(lcmStep>=2){
+    html+=`<div style="margin-bottom:12px">
+      <div class="lbl text-purp" style="margin-bottom:6px">Step 2 — Identify the FIRST common multiple (highlighted)</div>
+      <div class="text-sm" style="color:var(--purp)"><strong>${theLCM}</strong> appears in both lists — the <em>least</em> common multiple.</div>
+    </div>`;
+  }
+  if(lcmStep>=3){
+    html+=`<div class="result-banner purple"><div class="rb-label">Step 3 — The LCM is the LEAST common multiple found</div><div class="rb-value">LCM(${a}, ${b}) = ${theLCM}</div></div>`;
+  }
+  return html||'<p class="text-sm text-gray">Press "Next Step →" to begin.</p>';
+}
+
+function renderLCMPrime(a,b,theLCM){
+  const pfA=primeFactorize(a), pfB=primeFactorize(b);
+  const allP=[...new Set([...Object.keys(pfA),...Object.keys(pfB)].map(Number))].sort((x,y)=>x-y);
+  const shared=allP.filter(p=>pfA[p]&&pfB[p]);
+  const onlyA=allP.filter(p=>pfA[p]&&!pfB[p]);
+  const onlyB=allP.filter(p=>!pfA[p]&&pfB[p]);
+  let html='';
+  if(lcmStep>=1){
+    html+=`<div style="margin-bottom:18px">
+      <div class="lbl" style="margin-bottom:10px">Step 1 — Write prime factorizations</div>
+      <div class="grid-2">
+        <div class="pf-card"><div class="pf-n">${a} =</div><div class="pf-val">${formatPF(pfA)}</div></div>
+        <div class="pf-card"><div class="pf-n">${b} =</div><div class="pf-val">${formatPF(pfB)}</div></div>
+      </div>
+    </div>`;
+  }
+  if(lcmStep>=2){
+    const aItems=onlyA.length?onlyA.map(p=>`<div class="venn-item">${p}${pfA[p]>1?`<sup>${pfA[p]}</sup>`:''}</div>`).join(''):`<div class="text-xs text-gray">—</div>`;
+    const bItems=onlyB.length?onlyB.map(p=>`<div class="venn-item">${p}${pfB[p]>1?`<sup>${pfB[p]}</sup>`:''}</div>`).join(''):`<div class="text-xs text-gray">—</div>`;
+    const mItems=shared.length?shared.map(p=>{const e=Math.max(pfA[p],pfB[p]);return`<div class="venn-item">${p}${e>1?`<sup>${e}</sup>`:''}<span class="venn-sub"> max(${pfA[p]},${pfB[p]})</span></div>`}).join(''):`<div class="text-xs" style="color:var(--purp)">—</div>`;
+    html+=`<div style="margin-bottom:14px">
+      <div class="lbl text-purp" style="margin-bottom:10px">Step 2 — Include ALL primes from either number, use MAXIMUM exponent</div>
+      <div class="grid-3">
+        <div class="venn-col venn-a"><div class="venn-lbl">From ${a} only</div>${aItems}</div>
+        <div class="venn-col venn-mid-lcm"><div class="venn-lbl">Shared → max exp</div>${mItems}</div>
+        <div class="venn-col venn-b"><div class="venn-lbl">From ${b} only</div>${bItems}</div>
+      </div>
+      <div class="text-xs text-gray mt-10 text-center">LCM uses <strong style="color:var(--purp)">ALL three sections</strong> — every prime from either number.</div>
+    </div>`;
+  }
+  if(lcmStep>=3){
+    const parts=allP.map(p=>{const e=Math.max(pfA[p]||0,pfB[p]||0);return e>1?`${p}<sup>${e}</sup>`:p;});
+    html+=`<div class="result-banner purple">
+      <div class="rb-label">Step 3 — Multiply all primes with their maximum exponents</div>
+      <div class="rb-value">${parts.join(' × ')} = ${theLCM}</div>
+    </div>`;
+  }
+  return html||'<p class="text-sm text-gray">Press "Next Step →" to begin.</p>';
+}
+
+// Init LCM
+setLcmMethod('set');
+document.getElementById('lcm-a').addEventListener('change', lcmReset);
+document.getElementById('lcm-b').addEventListener('change', lcmReset);
+renderLCM();
+
+/* ═══════════════════════════════════════════
+   PRACTICE TAB
+═══════════════════════════════════════════ */
+const PAIRS=[[12,18],[24,36],[15,25],[40,60],[8,20],[42,28],[30,45],[16,24],[54,72],[35,49],[60,84],[100,75],[21,35],[48,64],[90,120],[18,27],[56,70],[44,66]];
+const TASKS=['gcf','lcm','both'];
+let pA=24,pB=36,pTask='gcf';
+let scoreCorrect=0,scoreTotal=0;
+let practiceChecked=false, solVisible=false;
+
+function generateProblem(){
+  const pair=PAIRS[Math.floor(Math.random()*PAIRS.length)];
+  pA=pair[0]; pB=pair[1];
+  pTask=TASKS[Math.floor(Math.random()*TASKS.length)];
+  practiceChecked=false; solVisible=false;
+  renderPractice();
+}
+
+function renderPractice(){
+  document.getElementById('pd-nums').innerHTML=`${pA} &amp; ${pB}`;
+  const typeLabel = pTask==='gcf'?'Greatest Common Factor (GCF)':pTask==='lcm'?'Least Common Multiple (LCM)':'GCF and LCM';
+  document.getElementById('pd-type').textContent=typeLabel;
+
+  // Answer inputs
+  const row=document.getElementById('ans-row');
+  let html='';
+  if(pTask==='gcf'||pTask==='both'){
+    html+=`<div><span class="lbl">GCF =</span><input type="number" id="ans-gcf" class="num-input" placeholder="?" /></div>`;
+  }
+  if(pTask==='lcm'||pTask==='both'){
+    html+=`<div><span class="lbl">LCM =</span><input type="number" id="ans-lcm" class="num-input" placeholder="?" /></div>`;
+  }
+  if(!practiceChecked){
+    html+=`<button class="btn btn-green" style="padding-bottom:12px" onclick="checkAnswer()">Check ✓</button>`;
+  } else {
+    html+=`<button class="btn btn-navy" style="padding-bottom:12px" onclick="generateProblem()">Next Problem →</button>`;
+  }
+  row.innerHTML=html;
+
+  document.getElementById('feedback-box').classList.add('hidden');
+  document.getElementById('solution-box').classList.add('hidden');
+  document.getElementById('sol-toggle-label').textContent='👁 Show Worked Solution';
+  solVisible=false;
+}
+
+function checkAnswer(){
+  const theGCF=gcd(pA,pB), theLCM=lcm(pA,pB);
+  const gcfAns=parseInt((document.getElementById('ans-gcf')||{}).value);
+  const lcmAns=parseInt((document.getElementById('ans-lcm')||{}).value);
+  const gcfRight=(pTask!=='lcm')&&gcfAns===theGCF;
+  const lcmRight=(pTask!=='gcf')&&lcmAns===theLCM;
+  let correct=pTask==='gcf'?gcfRight:pTask==='lcm'?lcmRight:(gcfRight&&lcmRight);
+
+  practiceChecked=true;
+  scoreTotal++;
+  if(correct) scoreCorrect++;
+  updateScore();
+
+  // Border feedback
+  if(document.getElementById('ans-gcf')){
+    document.getElementById('ans-gcf').className='num-input '+(gcfRight?'correct':'wrong');
+  }
+  if(document.getElementById('ans-lcm')){
+    document.getElementById('ans-lcm').className='num-input '+(lcmRight?'correct':'wrong');
+  }
+
+  const fb=document.getElementById('feedback-box');
+  fb.classList.remove('hidden');
+  fb.className='feedback '+(correct?'correct':'wrong');
+  let detail='';
+  if(!correct){
+    if(pTask==='gcf'||pTask==='both') detail+=`GCF(${pA}, ${pB}) = <strong>${theGCF}</strong>  `;
+    if(pTask==='lcm'||pTask==='both') detail+=`LCM(${pA}, ${pB}) = <strong>${theLCM}</strong>`;
+  }
+  fb.innerHTML=`<div class="fb-title">${correct?'✓ Correct! Excellent work.':'✗ Not quite — review the solution below.'}</div>${detail?`<div class="fb-detail">${detail}</div>`:''}`;
+
+  // Re-render row with Next button
+  renderPractice();
+  // Re-attach values and state
+  if(document.getElementById('ans-gcf')){
+    document.getElementById('ans-gcf').value=gcfAns||'';
+    document.getElementById('ans-gcf').className='num-input '+(gcfRight?'correct':'wrong');
+    document.getElementById('ans-gcf').disabled=true;
+  }
+  if(document.getElementById('ans-lcm')){
+    document.getElementById('ans-lcm').value=lcmAns||'';
+    document.getElementById('ans-lcm').className='num-input '+(lcmRight?'correct':'wrong');
+    document.getElementById('ans-lcm').disabled=true;
+  }
+  fb.classList.remove('hidden');
+  fb.className='feedback '+(correct?'correct':'wrong');
+  fb.innerHTML=`<div class="fb-title">${correct?'✓ Correct! Excellent work.':'✗ Not quite — review the solution below.'}</div>${detail?`<div class="fb-detail">${detail}</div>`:''}`;
+  document.getElementById('ans-row').appendChild(fb);
+}
+
+function updateScore(){
+  document.getElementById('score-correct').textContent=scoreCorrect;
+  document.getElementById('score-total').textContent=scoreTotal;
+  const pct=document.getElementById('score-pct');
+  if(scoreTotal>0){pct.textContent=Math.round(scoreCorrect/scoreTotal*100)+'%';pct.style.display='';}
+}
+
+function toggleSolution(){
+  const box=document.getElementById('solution-box');
+  solVisible=!solVisible;
+  if(solVisible){
+    box.classList.remove('hidden');
+    renderSolution();
+    document.getElementById('sol-toggle-label').textContent='Hide Solution';
+  } else {
+    box.classList.add('hidden');
+    document.getElementById('sol-toggle-label').textContent='👁 Show Worked Solution';
+  }
+}
+
+function renderSolution(){
+  const theGCF=gcd(pA,pB), theLCM=lcm(pA,pB);
+  const pfA=primeFactorize(pA), pfB=primeFactorize(pB);
+  const allP=[...new Set([...Object.keys(pfA),...Object.keys(pfB)].map(Number))].sort((x,y)=>x-y);
+  const shared=allP.filter(p=>pfA[p]&&pfB[p]);
+
+  let html=`<div class="grid-2" style="margin-bottom:14px">
+    <div class="pf-card"><div class="pf-n">${pA} =</div><div class="pf-val">${formatPF(pfA)}</div></div>
+    <div class="pf-card"><div class="pf-n">${pB} =</div><div class="pf-val">${formatPF(pfB)}</div></div>
+  </div>`;
+
+  if(pTask==='gcf'||pTask==='both'){
+    const detail=shared.length?shared.map(p=>`${p}: min(${pfA[p]},${pfB[p]})=${Math.min(pfA[p],pfB[p])}`).join(' · '):'No shared primes → GCF = 1';
+    html+=`<div class="sol-section sol-amber">
+      <div class="sol-head">GCF → Shared primes with MINIMUM exponents</div>
+      <div class="sol-body">${detail}</div>
+      <div class="sol-answer">GCF(${pA}, ${pB}) = ${theGCF}</div>
+    </div>`;
+  }
+  if(pTask==='lcm'||pTask==='both'){
+    const detail=allP.map(p=>`${p}: max(${pfA[p]||0},${pfB[p]||0})=${Math.max(pfA[p]||0,pfB[p]||0)}`).join(' · ');
+    const parts=allP.map(p=>{const e=Math.max(pfA[p]||0,pfB[p]||0);return e>1?`${p}<sup>${e}</sup>`:p;});
+    html+=`<div class="sol-section sol-purple">
+      <div class="sol-head">LCM → ALL primes with MAXIMUM exponents</div>
+      <div class="sol-body">${detail}</div>
+      <div class="sol-body">${parts.join(' × ')} = ${theLCM}</div>
+      <div class="sol-answer">LCM(${pA}, ${pB}) = ${theLCM}</div>
+    </div>`;
+  }
+  html+=`<div class="card card-green" style="background:var(--grnlt);border-color:rgba(6,95,70,0.2);padding:12px 14px;margin-top:0">
+    <span class="text-sm text-green"><strong>Verify:</strong> GCF × LCM = ${theGCF} × ${theLCM} = ${theGCF*theLCM} = ${pA} × ${pB} = ${pA*pB} ✓</span>
+  </div>`;
+  document.getElementById('solution-content').innerHTML=html;
+}
+
+// Init practice
+generateProblem();
+</script>
+</body>
+</html>
